@@ -51,7 +51,7 @@ class View(ttk.Frame):
 
         self.entry_left_type = tk.StringVar(value=1)
         self.entry_left = ttk.Entry(self, textvariable=self.entry_left_type)
-        self.entry_left.bind('<KeyRelease>', self.change_entry_left)
+        self.entry_left.bind('<KeyRelease>', self.label_swap_cliked) #self.change_entry_left)
         self.entry_left.pack() 
 
         self.label_left = ttk.Label(self, text='miles (mi)')
@@ -66,7 +66,7 @@ class View(ttk.Frame):
         # разобраться с bind !!!
         self.label_swap.bind('<Button-1>', self.label_swap_cliked)
 
-        self.entry_right_type = tk.StringVar()
+        self.entry_right_type = tk.StringVar(value=1.609344)
         self.entry_right = ttk.Entry(self, textvariable=self.entry_right_type)
         self.entry_right.pack()
 
@@ -85,18 +85,22 @@ class View(ttk.Frame):
     def set_controller(self, controller):
         self.controller = controller
 
-    def change_entry_left(self, event):
-        print(f'entry_left {self.entry_left.get()}')
-        if self.controller:
-            try:
-                entry_left_value = float(self.entry_left.get())
-                self.controller.convert(entry_left_value)
-            except ValueError as error: # TypeError as error:
-                print(f'In class View, method name: change_entry_left {error}')
+#    def change_entry_left(self, event):
+#        print(f'entry_left {self.entry_left.get()}')
+#        if self.controller:
+#            try:
+#                entry_left_value = float(self.entry_left.get())
+#                self.controller.convert(entry_left_value)
+#                #self.controller.convert_switch(entry_left_value)
+#            except ValueError as error: # TypeError as error:
+#                print(f'In class View, method name: change_entry_left {error}')
 
     def label_swap_cliked(self, event):
         if self.controller:
             try:
+                if self.entry_left_type.get() == '':
+                    self.entry_right_type.set('?')
+                    return
                 entry_left_value = float(self.entry_left_type.get()) 
                 self.controller.convert_switch(entry_left_value)
             except ValueError as error: # TypeError as error:
@@ -123,30 +127,15 @@ class Controller:
     def __init__(self, model, view):
         self.model = model
         self.view = view
-
-        self.defoult_convert()
-
-    def defoult_convert(self):
-        '''
-        Значение указанное по умолчанию: 1 миля
-        '''
-        try:
-            x = float(self.view.entry_left_type.get())
-            self.model.value = x
-            res = self.model.mi_to_km()
-            print(f'mi_to_km: {res}')
-            self.view.entry_right_value(res)
-        except TypeError as error:
-            print(f'In class Controller: {error}: {type(x)}')
         
-    def convert(self, x):
-        try:
-            self.model.value = x
-            res = self.model.mi_to_km()
-            print(f'mi_to_km: {res}')
-            self.view.entry_right_value(res)
-        except TypeError as error:
-            print(f'Wow!!!In class Controller: {error}: {type(x)}')
+#    def convert(self, x):
+#        try:
+#            self.model.value = x
+#            res = self.model.mi_to_km()
+#            print(f'mi_to_km: {res}')
+#            self.view.entry_right_value(res)
+#        except TypeError as error:
+#            print(f'Wow!!!In class Controller: {error}: {type(x)}')
 
 
     def convert_switch(self, x):
@@ -186,5 +175,4 @@ class App(tk.Tk):
 
 if __name__ == '__main__':
     app = App()
-    #view = View(app)
     app.mainloop()

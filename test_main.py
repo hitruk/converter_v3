@@ -45,6 +45,7 @@ class TestModelMethod(unittest.TestCase):
         mi = self.model.km_to_mi()
         self.assertEqual(mi, 6.2137119223733395)
 
+# СДЕЛАТЬ ЧЕРЕЗ ЦИКЛ РАБОТАЕТ НЕ КОРРЕКТНО!!!
     def test_property_value(self):
         ''' 
         буфер:
@@ -52,10 +53,16 @@ class TestModelMethod(unittest.TestCase):
         значение в тип данных: int, float   
         - тест на вызов исключения: TypeError
         '''
+        print('0')
         #model = Model(10)
         with self.assertRaises(TypeError):
-            self.model.value = 'asd'
-            self.model.value = False
+            #self.model.value = ''
+            print('1')
+            self.model.value = None
+            print('2')
+            self.model.value = 123
+            #self.model.value = 'asd'
+            #self.model.value = False
 
  
 
