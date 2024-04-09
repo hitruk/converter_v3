@@ -85,16 +85,6 @@ class View(ttk.Frame):
     def set_controller(self, controller):
         self.controller = controller
 
-#    def change_entry_left(self, event):
-#        print(f'entry_left {self.entry_left.get()}')
-#        if self.controller:
-#            try:
-#                entry_left_value = float(self.entry_left.get())
-#                self.controller.convert(entry_left_value)
-#                #self.controller.convert_switch(entry_left_value)
-#            except ValueError as error: # TypeError as error:
-#                print(f'In class View, method name: change_entry_left {error}')
-
     def label_swap_cliked(self, event):
         if self.controller:
             try:
@@ -127,15 +117,6 @@ class Controller:
     def __init__(self, model, view):
         self.model = model
         self.view = view
-        
-#    def convert(self, x):
-#        try:
-#            self.model.value = x
-#            res = self.model.mi_to_km()
-#            print(f'mi_to_km: {res}')
-#            self.view.entry_right_value(res)
-#        except TypeError as error:
-#            print(f'Wow!!!In class Controller: {error}: {type(x)}')
 
 
     def convert_switch(self, x):
