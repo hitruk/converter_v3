@@ -46,35 +46,36 @@ class View(ttk.Frame):
         self.pack(padx=2, pady=2, fill=BOTH, expand=True)
     
         # contant
-        self.label_title = ttk.Label(self, text='Convert Miles to Km')
-        self.label_title.pack()
+        options = {'padx':2, 'pady':2}
+        self.label_title = ttk.Label(self, text='Convert Miles to Km', font=("Helvetica", 14))
+        self.label_title.grid(column=0, row=0, columnspan=3, sticky=NW, **options)
+
+        self.label_left = ttk.Label(self, text='miles (mi)')
+        self.label_left.grid(column=0, row=1, **options)
+
+        self.label_right = ttk.Label(self, text='kilometers (km)')
+        self.label_right.grid(column=2, row=1, **options)
 
         self.entry_left_type = tk.StringVar(value=1)
         self.entry_left = ttk.Entry(self, textvariable=self.entry_left_type)
         self.entry_left.bind('<KeyRelease>', self.label_swap_cliked) #self.change_entry_left)
-        self.entry_left.pack() 
+        self.entry_left.grid(column=0, row=2, **options)
 
-        self.label_left = ttk.Label(self, text='miles (mi)')
-        self.label_left.pack()
 
+        self.label_result = ttk.Label(self, text='result')
+        self.label_result.grid(column=1, row=2)#, **options)
 
         # Label_swap
         # отображать label будет text ='asdas', но если задан textvariable='asdasd', то отобразится только текст variable
         # self.label_swap_type = tk.BooleanVar() # defoult False
         self.label_swap = ttk.Label(self,  text='<==>')  # textvariable=self.label_swap_type,
-        self.label_swap.pack()
+        self.label_swap.grid(column=1, row=2)#, **options)
         # разобраться с bind !!!
         self.label_swap.bind('<Button-1>', self.label_swap_cliked)
 
         self.entry_right_type = tk.StringVar(value=1.609344)
         self.entry_right = ttk.Entry(self, textvariable=self.entry_right_type)
-        self.entry_right.pack()
-
-        self.label_right = ttk.Label(self, text='kilometers (km)')
-        self.label_right.pack()
-
-        self.label_result = ttk.Label(self, text='result')
-        self.label_result.pack()
+        self.entry_right.grid(column=2, row=2, **options)
 
         # set controller
         self.controller = None
@@ -144,7 +145,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Hello world!')
-        self.geometry('300x400')
+        self.geometry('400x400')
         
         model = Model(1)
         view = View(self)
